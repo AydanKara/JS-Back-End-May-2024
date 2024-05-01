@@ -1,0 +1,4 @@
+- Booking - Users-Accommodation-Extras-Host
+
+1. npm init -y
+2. npm i express express-handlebars
