@@ -5,7 +5,7 @@ const data = JSON.parse(fs.readFileSync(filepath));
 
 async function persist() {
   return new Promise((res, rej) => {
-    fs.writeFileSync(filepath, JSON.stringify(data), (err) => {
+    fs.writeFileSync(filepath, JSON.stringify(data, null, 2), (err) => {
       if (err === null) {
         res();
       } else {
@@ -15,8 +15,16 @@ async function persist() {
   });
 }
 
-function getAll() {
-  return data;
+function getAll(search, city, fromPrice, toPrice) {
+  search = search.toLowerCase();
+  return data
+    .filter(
+      (r) =>
+        r.name.toLowerCase().includes(search) ||
+        r.description.toLowerCase().includes(search)
+    )
+    .filter((r) => r.city.toLowerCase().includes(city.toLowerCase()))
+    .filter((r) => r.price >= fromPrice && r.price <= toPrice);
 }
 
 function getById(id) {
@@ -24,27 +32,32 @@ function getById(id) {
 }
 
 async function create(roomData) {
-    const room = {
-        id: getId(),
-        name: roomData.name,
-        description: roomData.description,
-        city: roomData.city,
-        beds: Number(roomData.beds),
-        price: Number(roomData.price),
-        imgUrl: roomData.imgUrl
-    }
+  const room = {
+    id: getId(),
+    name: roomData.name,
+    description: roomData.description,
+    city: roomData.city,
+    beds: Number(roomData.beds),
+    price: Number(roomData.price),
+    imgUrl: roomData.imgUrl,
+  };
 
-    data.push(room);
-    await persist()
-    return room;
+  const missing = Object.entries(room).filter(([k, v]) => !v);
+  if (missing.length > 0) {
+    throw new Error(missing.map((m) => `${m[0]} is required!`).join("\n"));
+  }
+
+  data.push(room);
+  await persist();
+  return room;
 }
 
 function getId() {
-    return ("000000" + (Math.random() * 999999 | 0).toString(16)).slice(-6);
+  return ("000000" + ((Math.random() * 999999) | 0).toString(16)).slice(-6);
 }
 
 module.exports = {
   getAll,
   getById,
-  create
+  create,
 };

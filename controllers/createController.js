@@ -10,8 +10,11 @@ router.post("/", async (req, res) => {
   try {
     const result = await create(req.body);
     res.redirect("/catalog/" + result.id);
-  } catch (error) {
-    res.render("create", { title: "Request Error creating Accommodation" });
+  } catch (err) {
+    res.render("create", {
+      title: "Request Error",
+      error: err.message.split("\n"),
+    });
   }
 });
 
