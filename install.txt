@@ -1,5 +1,9 @@
 - Booking - Users-Accommodation-Extras-Host
 
+Part - 1
 1. npm init -y
 2. npm i express express-handlebars
 3. npm install nodemon
+
+Part - 2
+1. npm i mongoose
