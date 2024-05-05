@@ -5,10 +5,10 @@ function getAll(search, city, fromPrice, toPrice) {
 }
 
 function getById(id) {
-  return Room.findById(id).populate('facilities', 'label iconUrl').lean();
+  return Room.findById(id).populate("facilities", "label iconUrl").lean();
 }
 
- async function create(roomData) {
+async function create(roomData, ownerId) {
   const room = {
     name: roomData.name,
     description: roomData.description,
@@ -16,6 +16,7 @@ function getById(id) {
     beds: Number(roomData.beds),
     price: Number(roomData.price),
     imgUrl: roomData.imgUrl,
+    owner: ownerId
   };
 
   const missing = Object.entries(room).filter(([k, v]) => !v);
@@ -34,5 +35,5 @@ function getById(id) {
 module.exports = {
   getAll,
   getById,
-  create
+  create,
 };
