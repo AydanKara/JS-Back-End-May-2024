@@ -16,7 +16,7 @@ async function create(roomData, ownerId) {
     beds: Number(roomData.beds),
     price: Number(roomData.price),
     imgUrl: roomData.imgUrl,
-    owner: ownerId
+    owner: ownerId,
   };
 
   const missing = Object.entries(room).filter(([k, v]) => !v);
@@ -28,6 +28,31 @@ async function create(roomData, ownerId) {
   return result;
 }
 
+async function update(roomId, roomData) {
+  const missing = Object.entries(roomData).filter(([k, v]) => !v);
+  if (missing.length > 0) {
+    throw new Error(missing.map((m) => `${m[0]} is required!`).join("\n"));
+  }
+
+  const room = await Room.findById(roomId);
+  console.log(room);
+
+  room.name = roomData.name;
+  room.description = roomData.description;
+  room.city = roomData.city;
+  room.beds = Number(roomData.beds);
+  room.price = Number(roomData.price);
+  room.imgUrl = roomData.imgUrl;
+
+  await room.save();
+
+  return room;
+}
+
+async function deleteById(roomId) {
+  return Room.findByIdAndRemove(roomId);
+}
+
 /* function getId() {
   return ("000000" + ((Math.random() * 999999) | 0).toString(16)).slice(-6);
 }  */
@@ -36,4 +61,6 @@ module.exports = {
   getAll,
   getById,
   create,
+  update,
+  deleteById,
 };
