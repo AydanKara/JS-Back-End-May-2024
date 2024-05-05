@@ -10,7 +10,7 @@
     <div id="page-content">
         <header>
             <a href="/" class="title-logo">
-                <img src="/static/assets/logo.png">
+                <img src="https://www.creativefabrica.com/wp-content/uploads/2023/12/29/Travel-Booking-holiday-logo-design-Graphics-87312986-1-1-580x386.jpg">
                 <span>SoftUni Sleepover</span>
             </a>
             <nav class="main-nav nav-mid">
@@ -18,12 +18,24 @@
                     <li>
                         <a href="/catalog">Browse Accommodation</a>
                     </li>  
+                    {{#if hasUser}}
                     <li>
                         <a href="/create">Create</a>
                     </li>
                     <li>
                         <a href="/facility/create">Create Facility</a>
                     </li>
+                    <li>
+                        <a href="/auth/logout">Logout</a>
+                    </li>
+                    {{else}}
+                    <li>
+                        <a href="/auth/login">Login</a>
+                    </li>
+                    <li>
+                        <a href="/auth/register">Register</a>
+                    </li>
+                    {{/if}}
                 </ul>
             </nav>
         </header>

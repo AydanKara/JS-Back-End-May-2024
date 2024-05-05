@@ -11,9 +11,9 @@
 }
 
 .title-logo {
-    display: block;
-    float: left;
-    width: 200px;
+    display: flex;
+    align-items: center;
+    max-width: 130px;
     text-decoration: none;
     color: white;
 }

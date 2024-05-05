@@ -7,3 +7,5 @@ Part - 1
 
 Part - 2
 1. npm i mongoose
+2. npm i jsonwebtoken cookie-parser
+3. npm i bcrypt    
